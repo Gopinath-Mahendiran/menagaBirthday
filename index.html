@@ -95,6 +95,7 @@ body.nm .tv{display:none}
 .page.on .letter p{animation:wr 1s both}
 .sig{font-family:"Chewy",cursive;font-size:32px;color:var(--pk2);rotate:-2deg}
 .sur{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;min-height:78vh;justify-content:center}
+#surprise-content[hidden]{display:none}
 .box{font-size:150px;line-height:1;transition:transform .3s}
 .box:hover{transform:scale(1.08) rotate(-4deg)}
 .box.shake{animation:sh .4s infinite}
@@ -215,12 +216,23 @@ body.nm .tv{display:none}
 </section>
 
 <section class="page" id="page-surprise"><a class="bk" href="#">← back</a>
-  <div class="wrap sur">
-    <button class="box" id="box" aria-label="Open the gift">🎁</button>
-    <div id="cnt" aria-live="polite"></div>
-    <p id="hint" class="ch" style="font-size:30px">Tap the box to open it!</p>
-    <div class="out" id="out"><h1 class="pt" style="margin:0 0 6px">Surprise!</h1><div class="note" id="sec"></div><div class="chips" id="chips"></div><button class="again ch" id="again">seal it again</button></div>
-  </div></section>
+  <div class="wrap">
+    <div class="note-gate" id="surprise-gate">
+      <p>Enter the password to open your surprise 🎁</p>
+      <form id="surprise-password-form">
+        <input id="surprise-password" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required>
+        <button type="submit">Unlock</button>
+      </form>
+      <p class="note-error" id="surprise-password-error" aria-live="polite"></p>
+    </div>
+    <div class="sur" id="surprise-content" hidden>
+      <button class="box" id="box" aria-label="Open the gift">🎁</button>
+      <div id="cnt" aria-live="polite"></div>
+      <p id="hint" class="ch" style="font-size:30px">Tap the box to open it!</p>
+      <div class="out" id="out"><h1 class="pt" style="margin:0 0 6px">Surprise!</h1><div class="note" id="sec"></div><div class="chips" id="chips"></div><button class="again ch" id="again">seal it again</button></div>
+    </div>
+  </div>
+</section>
 
 <section class="page" id="page-gallery"><a class="bk" href="#">← back</a>
   <div class="wrap"><h1 class="pt">Memory Gallery</h1><div class="grid" id="grid"></div></div></section>
@@ -342,6 +354,24 @@ $("#note-password-form").addEventListener("submit",function(e){
     $("#note-password").select();
   }
 });
+function lockSurprise(){
+  $("#surprise-gate").hidden=false;
+  $("#surprise-content").hidden=true;
+  $("#surprise-password-form").reset();
+  $("#surprise-password-error").textContent="";
+  reset();
+}
+$("#surprise-password-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  if($("#surprise-password").value===NOTE_PASSWORD){
+    $("#surprise-gate").hidden=true;
+    $("#surprise-content").hidden=false;
+    $("#surprise-password-error").textContent="";
+  }else{
+    $("#surprise-password-error").textContent="That password doesn't match. Try again.";
+    $("#surprise-password").select();
+  }
+});
 $("#chips").innerHTML=CONFIG.surprise.chips.map(function(c){return '<span>'+esc(c)+'</span>'}).join("");
 $("#vid").innerHTML=CONFIG.video?'<video src="'+CONFIG.video+'" autoplay loop muted playsinline></video>':'<div class="vbg"></div><div class="vmid">🎬</div><div class="bar"><i></i></div>';
 $("#transition-left").src=CONFIG.transition.left;$("#transition-right").src=CONFIG.transition.right;
@@ -406,6 +436,7 @@ var R={"":"main",note:"note",surprise:"surprise",gallery:"gallery",transition:"t
 function route(){var k=location.hash.slice(1);if(!(k in R))k="";
   $("#lb").classList.remove("on");document.body.classList.toggle("nm",k!=="");
   if(k!=="note")lockNote();
+  if(k!=="surprise")lockSurprise();
   $$(".page").forEach(function(p){p.classList.toggle("on",p.id==="page-"+R[k])});
   $("#page-"+R[k]).scrollTop=0;if(k==="surprise")reset();par()}
 addEventListener("hashchange",route);route();
