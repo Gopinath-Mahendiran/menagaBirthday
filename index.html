@@ -95,6 +95,7 @@ body.nm .tv{display:none}
 .page.on .letter p{animation:wr 1s both}
 .sig{font-family:"Chewy",cursive;font-size:32px;color:var(--pk2);rotate:-2deg}
 .sur{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;min-height:78vh;justify-content:center}
+#surprise-content[hidden]{display:none}
 .box{font-size:150px;line-height:1;transition:transform .3s}
 .box:hover{transform:scale(1.08) rotate(-4deg)}
 .box.shake{animation:sh .4s infinite}
@@ -215,12 +216,23 @@ body.nm .tv{display:none}
 </section>
 
 <section class="page" id="page-surprise"><a class="bk" href="#">← back</a>
-  <div class="wrap sur">
-    <button class="box" id="box" aria-label="Open the gift">🎁</button>
-    <div id="cnt" aria-live="polite"></div>
-    <p id="hint" class="ch" style="font-size:30px">Tap the box to open it!</p>
-    <div class="out" id="out"><h1 class="pt" style="margin:0 0 6px">Surprise!</h1><div class="note" id="sec"></div><div class="chips" id="chips"></div><button class="again ch" id="again">seal it again</button></div>
-  </div></section>
+  <div class="wrap">
+    <div class="note-gate" id="surprise-gate">
+      <p>Enter the password to open your surprise 🎁</p>
+      <form id="surprise-password-form">
+        <input id="surprise-password" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required>
+        <button type="submit">Unlock</button>
+      </form>
+      <p class="note-error" id="surprise-password-error" aria-live="polite"></p>
+    </div>
+    <div class="sur" id="surprise-content" hidden>
+      <button class="box" id="box" aria-label="Open the gift">🎁</button>
+      <div id="cnt" aria-live="polite"></div>
+      <p id="hint" class="ch" style="font-size:30px">Tap the box to open it!</p>
+      <div class="out" id="out"><h1 class="pt" style="margin:0 0 6px">Surprise!</h1><div class="note" id="sec"></div><div class="chips" id="chips"></div><button class="again ch" id="again">seal it again</button></div>
+    </div>
+  </div>
+</section>
 
 <section class="page" id="page-gallery"><a class="bk" href="#">← back</a>
   <div class="wrap"><h1 class="pt">Memory Gallery</h1><div class="grid" id="grid"></div></div></section>
@@ -251,12 +263,12 @@ var CONFIG={
   transition:{left:"photo booth/WhatsApp Video 2026-10-30 at 03.41.40.mp4",right:"photo booth/WhatsApp Video 2026-10-30 at 04.39.43.mp4"},
   heart:{img:"WhatsApp Image 2026-10-30 at 01.49.55 (1).jpeg",emoji:"😊",colors:["#ffc2d4","#ffe9a8"]},
   poem:[
-    "Happy Birthday, girl! ❤️",
+    "Happiest Birthday, girlfriend! ❤️",
     "From random outings and shopping sprees to little trips and late-night gossip, every moment ",
     "Here’s to more adventures, silly laughs, random plans, endless conversations, and a lifetime of ",
     "annoying each other. 😂",
     "I hope your life is always filled with happiness, love, and everything you wish for.",
-    "YStay cute, stay crazy, and never change. So glad to have you in my life. Lots of love, idiot! 🫶🏻💕",
+    "Stay cute, stay crazy, and never change. So glad to have you in my life. Lots of love, idiot! 🫶🏻💕",
     "I hope this year brings you endless smiles,",
     "peace, and all the love your heart deserves.",
     "And whenever life gets difficult,",
@@ -267,18 +279,21 @@ var CONFIG={
     {cap:"",emoji:"🌿",colors:["#ffc2d4","#ffe9a8"],img:"photo booth/WhatsApp Image 2026-10-30 at 03.41.19 (1).jpeg"},
     {cap:"",emoji:"💛",colors:["#b9e8d0","#bfe3ff"],img:"photo booth/WhatsApp Image 2026-10-30 at 03.41.45.jpeg"},
     {cap:"",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"WhatsApp Image 2026-10-30 at 01.55.24 (1).jpeg"},
+    {cap:"",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"photo booth/WhatsApp Image 2026-10-31 at 13.09.51 (1).jpeg"},
     {cap:"",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"photo booth/WhatsApp Video 2026-10-30 at 10.17.36.mp4"}, 
     {cap:"",emoji:"🌿",colors:["#ffc2d4","#ffe9a8"],img:"photo booth/WhatsApp Image 2026-10-30 at 03.41.19.jpeg"},
     {cap:"",emoji:"💛",colors:["#b9e8d0","#bfe3ff"],img:"photo booth/WhatsApp Image 2026-10-30 at 03.41.42 (3).jpeg"},
     {cap:"",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"photo booth/WhatsApp Image 2026-10-30 at 03.41.43.jpeg"},
     {cap:"",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"photo booth/WhatsApp Image 2026-10-30 at 17.13.33.jpeg"},
     {cap:"Stay strong",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"photo booth/WhatsApp Image 2026-10-30 at 03.41.41 (1).jpeg"},
-   
+    {cap:"",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"photo booth/WhatsApp Image 2026-10-31 at 13.09.51.jpeg"},
+    {cap:"",emoji:"✨",colors:["#ffe9a8","#ffc2d4"],img:"photo booth/WhatsApp Image 2026-10-31 at 13.34.23.jpeg"},
+
   ],
   chapters:[
     {t:"One perfect night ride",x:"lost in speed and and fear of getting caught, but we made it home safe.",cap:"that night together",emoji:"🏍️",colors:["#ffc2d4","#ffe9a8"],img:"WhatsApp Image 2026-10-30 at 01.55.23 (2).jpeg"},
     {t:"Two inseparables",x:"You guys were inseparable, and you still are. Even when you fight, you always make up.",cap:"always side by side",emoji:"💞",colors:["#b9e8d0","#bfe3ff"],img:"WhatsApp Image 2026-10-30 at 01.55.23 (1).jpeg"},
-    {t:"Little trouble",x:"night show padathuku poi iruku veadiyathu. just uhh miss",cap:"partners in mischief",emoji:"😎",colors:["#ffe9a8","#ffc2d4"],img:"WhatsApp Image 2026-10-30 at 01.58.03.jpeg"}
+    {t:"Little trouble",x:"night show padathuku poi iruku veadiyathu. just uhh miss",cap:"kutty you",emoji:"😎",colors:["#ffe9a8","#ffc2d4"],img:"WhatsApp Image 2026-10-30 at 01.58.03.jpeg"}
 
   ],
   band:"✨",
@@ -286,9 +301,18 @@ var CONFIG={
     "Ohhh girlfriend ",
     "This is a note from your boyfriend. You asked for a handwritten note from everyone, but if I did that, I'd be just like everyone else. As your boyfriend, I should do something different, right? That's why I decided to turn my letter into a digital note instead.",
     "I wasted our first two years by not talking to you, and lately, I've really started to regret it. I don't know if you remember, but during our first year, we used to walk home needs together every day. One evening, you offered me a chocolate, but I refused it and didn't even look at your face. I felt so guilty about that and couldn't stop thinking about it. I wanted to apologize back then but didn't know how, so I want to take this opportunity to finally say I'm sorry.",
+    "you know I was comfortable around only few countable women , and your are one such 🤍…. like i can talk anything anytime like from 18+ jokes💀 to how the fucking life going on … , personally l like your vibe a lot but I Can’t match yours all time as you know that’s how I build and alway be the same don’t changes the way you are now for any one cause that your identity …. , only meeting you guys made My college life to the fullest till then was ‘it was like blend gravy with no spice’ . from random night calls , night out , rash drive (hope you enjoyed all of it) is the craziest , shopping , eating chats all around , playing and eating in the park are one of my core memories… and my all time okay laban partner ",
+    "While going out in a group is fun, heading out with just two or three of us is always the craziest and most memorable. Spending time with you and Hothead is always such a fun adventure.wanna go back to days once we used to play shuttle in the evening 🥹 , I gonna definitely miss all these and you after the college days",
+    "No matter where life takes us, let's always stay in touch. Please reach out whenever you need anything—if I can help, I definitely will (since you're my first girlfriend 😜). I want you to always be as happy as you are now, and I wish you the very best in your future endeavors. ",
+    "I might have hurt you a few times, but it was never intentional. If I did, I am so extremely soooooooooooooooorrrrrrrrrrrrrrrrrryyyyyyyyyyyyyyy . Let's meet up once in a while, and please, don't forget me.",
+    "I'm not sure how well I've expressed everything here or how this all sounds, but I still have so much more I want to share with you. I'm just not quite sure how to put the rest into words.",
+    "				here your boyfriend wait for the reply every curiously shoot the reply ASAP , I too want the reply to a letter ……….       ",
+    "                                                                                     	here by your friend , Boyfriend ",
+    "                                                                                                   TanipoG                "
   ],
-  surprise:{secret:"packup and get ready for the sunraise soon",chips:["🕖 6:00 AM","📍 let it be a secret"]}
+  surprise:{secret:"packup and get ready for the sunraise soon (if you are okay , else i will plan something different)",chips:["🕖 6:00 AM","📍 let it be a secret"]}
 };
+
 /* ========================== */
 var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
 var esc=function(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML};
@@ -318,11 +342,13 @@ $("#rows").innerHTML=CONFIG.chapters.map(function(c,i){
   var sp=[.12,-.1,.14][i%3];
   return '<div class="row rv"><div class="pw">'+pic(c,rot[i%4],'data-s="'+sp+'"')+'</div><div class="tx"><h2>'+esc(c.t)+'</h2><p>'+esc(c.x)+'</p></div>'+st(dec[i%3],(i%2?"left:0":"right:0")+";top:-14px",36,5,10)+'</div>';
 }).join("");
+var closingPhoto=CONFIG.photos.find(function(p){return p.cap==="Stay strong"})||CONFIG.photos[CONFIG.photos.length-1];
+var galleryPhotos=CONFIG.photos.filter(function(p){return p.cap!=="Stay strong"});
 $("#closing-photo").innerHTML='<div class="pw">'+
-  pic(Object.assign({},CONFIG.photos[CONFIG.photos.length-1],{cap:"Stay strong"}),rot[CONFIG.photos.length%rot.length])+
+  pic(closingPhoto,rot[CONFIG.photos.indexOf(closingPhoto)%rot.length])+
   '</div>';
-$("#grid").innerHTML=CONFIG.photos.map(function(p,i){return pic(p,rot[i%4],'tabindex="0" data-i="'+i+'"',"aspect-ratio:1;")}).join("")+
-  (CONFIG.video?'<figure class="gallery-video rv" style="--r:'+rot[CONFIG.photos.length%rot.length]+'"><div class="gallery-clip"><video src="'+CONFIG.video+'" autoplay loop muted playsinline preload="metadata" aria-label="Birthday memory video playing on loop"></video></div><figcaption>A little moment to replay</figcaption></figure>':"");
+$("#grid").innerHTML=galleryPhotos.map(function(p,i){return pic(p,rot[i%4],'tabindex="0" data-i="'+i+'"',"aspect-ratio:1;")}).join("")+
+  (CONFIG.video?'<figure class="gallery-video rv" style="--r:'+rot[galleryPhotos.length%rot.length]+'"><div class="gallery-clip"><video src="'+CONFIG.video+'" autoplay loop muted playsinline preload="metadata" aria-label="Birthday memory video playing on loop"></video></div><figcaption>A little moment to replay</figcaption></figure>':"");
 $("#letter").innerHTML=CONFIG.note.map(function(t,i){return '<p style="animation-delay:'+(.4+i*1.1)+'s">'+esc(t)+'</p>'}).join("")+'<div class="sig">'+esc(CONFIG.from)+'</div>';
 var NOTE_PASSWORD="Chocotraffle";
 function lockNote(){
@@ -342,6 +368,24 @@ $("#note-password-form").addEventListener("submit",function(e){
     $("#note-password").select();
   }
 });
+function lockSurprise(){
+  $("#surprise-gate").hidden=false;
+  $("#surprise-content").hidden=true;
+  $("#surprise-password-form").reset();
+  $("#surprise-password-error").textContent="";
+  reset();
+}
+$("#surprise-password-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  if($("#surprise-password").value===NOTE_PASSWORD){
+    $("#surprise-gate").hidden=true;
+    $("#surprise-content").hidden=false;
+    $("#surprise-password-error").textContent="";
+  }else{
+    $("#surprise-password-error").textContent="That password doesn't match. Try again.";
+    $("#surprise-password").select();
+  }
+});
 $("#chips").innerHTML=CONFIG.surprise.chips.map(function(c){return '<span>'+esc(c)+'</span>'}).join("");
 $("#vid").innerHTML=CONFIG.video?'<video src="'+CONFIG.video+'" autoplay loop muted playsinline></video>':'<div class="vbg"></div><div class="vmid">🎬</div><div class="bar"><i></i></div>';
 $("#transition-left").src=CONFIG.transition.left;$("#transition-right").src=CONFIG.transition.right;
@@ -355,7 +399,7 @@ $("#page-main").addEventListener("scroll",function(){requestAnimationFrame(par)}
 
 /* lightbox */
 var li=0;
-function lb(i){li=(i+CONFIG.photos.length)%CONFIG.photos.length;var p=CONFIG.photos[li],e=$("#lph");e.style.backgroundImage=bgOf(p);e.textContent=p.img?"":p.emoji;$("#lbc").textContent=p.cap;$("#lb").classList.add("on")}
+function lb(i){li=(i+galleryPhotos.length)%galleryPhotos.length;var p=galleryPhotos[li],e=$("#lph");e.style.backgroundImage=bgOf(p);e.textContent=p.img?"":p.emoji;$("#lbc").textContent=p.cap;$("#lb").classList.add("on")}
 $("#grid").addEventListener("click",function(e){var t=e.target.closest(".pic");if(t)lb(+t.dataset.i)});
 $("#grid").addEventListener("keydown",function(e){var t=e.target.closest(".pic");if(t&&e.key==="Enter")lb(+t.dataset.i)});
 $("#lp").onclick=function(){lb(li-1)};$("#ln").onclick=function(){lb(li+1)};$("#lc").onclick=function(){$("#lb").classList.remove("on")};
@@ -388,6 +432,7 @@ $("#snd").onclick=function(){
 document.addEventListener("visibilitychange",function(){
   if(document.hidden)musicAudio.pause();else if(on&&musicStarted)music();
 });
+music();
 
 /* surprise */
 function type(el,t,sp){el.textContent="";var i=0;(function n(){el.textContent=t.slice(0,++i);if(i<t.length)setTimeout(n,sp)})()}
@@ -406,6 +451,7 @@ var R={"":"main",note:"note",surprise:"surprise",gallery:"gallery",transition:"t
 function route(){var k=location.hash.slice(1);if(!(k in R))k="";
   $("#lb").classList.remove("on");document.body.classList.toggle("nm",k!=="");
   if(k!=="note")lockNote();
+  if(k!=="surprise")lockSurprise();
   $$(".page").forEach(function(p){p.classList.toggle("on",p.id==="page-"+R[k])});
   $("#page-"+R[k]).scrollTop=0;if(k==="surprise")reset();par()}
 addEventListener("hashchange",route);route();
